@@ -3,8 +3,9 @@ SEMESTERAUSSTELLUNG SoSe 2018
 MEDIALE SYSTEME
 FRAMEWORK SECOND SCREEN
 PHONE VERSION 2
-*/
 
+Hello Github!
+*/
 function setup() {
 	createCanvas(windowWidth, windowHeight);
 
