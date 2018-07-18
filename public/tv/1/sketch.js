@@ -21,20 +21,30 @@ function setup() {
 
 	// Verbindung zu Server aufbauen
 	// Nicht löschen!
-	//initSocket();
+	initSocket();
 }
 
 function draw() {
 
   for (let i=599; i>= 0; i--){
-		bubbles[i].show();
+		let bubble = bubbles[i];
+        bubble.show();
+        sendMessage('bubble' + i, {
+            x: bubble.x,
+            y: bubble.y,
+            r: bubble.r,
+            g: bubble.g,
+            b: bubble.b,
+        })
 	}
 	let frameCount = 120;
 	let amt = sin((frameCount / 100) + 1) / 2;
 
 	sendMessage('amt', { test: (amt) });
+}
 
-
+function receive(message){
+    alert(message);
 }
 
 // wird aufgerufen, sobald eine Nachricht ankommt
@@ -75,6 +85,12 @@ class Bubble{
 		fill(this.r, this.g, this.b);
 		ellipse(this.x, this.y, 6, 6);
 	}
+
+    getX() {return x;}
+    getY() {return y;}
+    getR() {return r;}
+    getG() {return g;}
+    getB() {return b;}
 
 
 }

@@ -12,7 +12,7 @@ function setup() {
 	player = new Player();
 	// Verbindung zu Server aufbauen
 	// Nicht löschen!
-	//initSocket();
+	initSocket();
 }
 
 function draw() {
@@ -20,10 +20,8 @@ function draw() {
 	translate(width/2, height/2);
 }
 
-function getBubbles(){
-	receive(message){
-		print(message);
-	}
+function receive(message) {
+    alert(message);
 }
 
 class Player{
@@ -38,7 +36,6 @@ class Player{
 		finger.setMag(3);
 		this.position.add(this.velocity);
 	}
-
 
 	show(){
     ellipse(this.position.x, this.position.y, this.r*2,this.r*2);
