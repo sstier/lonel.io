@@ -8,37 +8,36 @@ let player;
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
+  initSocket(); // Nicht löschen! und nicht auskommentieren du Idiot!!
 
 	player = new Player();
-	// Verbindung zu Server aufbauen
-	// Nicht löschen!
-	initSocket();
 }
 
 function draw() {
   background(200);
-	translate(width/2, height/2);
+	//translate(width/2, height/2);
+	player.show();
 }
 
+
 function receive(message) {
-    alert(message);
+    print(message);
 }
 
 class Player{
   constructor(){
-	  this.r = 64;
-	  this.position = createVector(width/2, height/2);
+	  this.r = (width/5)/2;
+	  this.x = width/2;
+		this.y = height/2;
 		this.velocity = createVector(0,0);
 	}
 
-	move(){
-	  let finger = createVector(mouseX- width/2, mouseY-height/2);
-		finger.setMag(3);
-		this.position.add(this.velocity);
-	}
 
 	show(){
-    ellipse(this.position.x, this.position.y, this.r*2,this.r*2);
+		noLoop();
+		fill(random(80,200),random(80,200),random(80,200));
+		noStroke();
+    ellipse(this.x, this.y, this.r*2);
 	}
 }
 /*function mouseDragged() {
