@@ -8,39 +8,31 @@ let bubbles = [];
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
-
-  //bubbles = new Bubbles();
-	for (let i=0; i< 600; i++){
-		let b = new Bubble();
-		bubbles.push(b);
-
-
-	}
-
-	background(200);
-
-	// Verbindung zu Server aufbauen
-	// Nicht löschen!
 	initSocket();
-}
-
-function draw() {
-
-  for (let i=599; i>= 0; i--){
-		let bubble = bubbles[i];
-        bubble.show();
-        sendMessage('bubble' + i, {
-            x: bubble.x,
+    let bubbleCount = 600;
+    let data = [bubbleCount];
+  //bubbles = new Bubbles();
+	for (let i=0; i< bubbleCount; i++){
+		let b = new Bubble(i);
+		bubbles.push(b);
+        data[i] = b;
+            /*{
+            x: b.x,
             y: bubble.y,
             r: bubble.r,
             g: bubble.g,
             b: bubble.b,
-        })
+        }*/
 	}
-	let frameCount = 120;
-	let amt = sin((frameCount / 100) + 1) / 2;
+    sendMessage('bubbles', data);
+	background(200);
+}
 
-	sendMessage('amt', { test: (amt) });
+function draw() {
+  for (let i=599; i>= 0; i--){
+		let bubble = bubbles[i];
+        bubble.show();
+	}
 }
 
 function receive(message){
@@ -64,7 +56,8 @@ function receive(message){
 
 
 class Bubble{
-  constructor(){
+  constructor(id){
+        this.id = id;
 		this.x = random(0, width);
 		this.y = random (0, height);
 		this.r = random(80, 255);
