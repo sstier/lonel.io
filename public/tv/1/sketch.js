@@ -8,33 +8,35 @@ let bubbles = [];
 
 function setup() {
 	createCanvas(windowWidth, windowHeight);
-
+	initSocket();
+    let bubbleCount = 600;
+    let data = [bubbleCount];
   //bubbles = new Bubbles();
-	for (let i=0; i< 600; i++){
-		let b = new Bubble();
+	for (let i=0; i< bubbleCount; i++){
+		let b = new Bubble(i);
 		bubbles.push(b);
-
-
+        data[i] = b;
+            /*{
+            x: b.x,
+            y: bubble.y,
+            r: bubble.r,
+            g: bubble.g,
+            b: bubble.b,
+        }*/
 	}
-
+    sendMessage('bubbles', data);
 	background(200);
-
-	// Verbindung zu Server aufbauen
-	// Nicht löschen!
-	//initSocket();
 }
 
 function draw() {
-
   for (let i=599; i>= 0; i--){
-		bubbles[i].show();
+		let bubble = bubbles[i];
+        bubble.show();
 	}
-	let frameCount = 120;
-	let amt = sin((frameCount / 100) + 1) / 2;
+}
 
-	sendMessage('amt', { test: (amt) });
-
-
+function receive(message){
+    alert(message);
 }
 
 // wird aufgerufen, sobald eine Nachricht ankommt
@@ -54,7 +56,8 @@ function draw() {
 
 
 class Bubble{
-  constructor(){
+  constructor(id){
+        this.id = id;
 		this.x = random(0, width);
 		this.y = random (0, height);
 		this.r = random(80, 255);
@@ -75,6 +78,12 @@ class Bubble{
 		fill(this.r, this.g, this.b);
 		ellipse(this.x, this.y, 6, 6);
 	}
+
+    getX() {return x;}
+    getY() {return y;}
+    getR() {return r;}
+    getG() {return g;}
+    getB() {return b;}
 
 
 }
